@@ -1,107 +1,62 @@
 <template>
-  <div class="signup-container">
-    <el-card class="signup-card">
-      <h2>Signup</h2>
-      <el-form @submit.prevent="handleSignup">
-        <el-form-item label="Username">
-          <el-input v-model="form.username" placeholder="Enter your username"></el-input>
-          <p v-show="show_user_msg">User with this username already exists!</p>
-        </el-form-item>
-        <el-form-item label="Password">
-          <el-input v-model="form.password" type="password" placeholder="Enter your password"></el-input>
-        </el-form-item>
-        <el-form-item label="Confirm Password">
-          <el-input v-model="form.confirmPassword" type="password" placeholder="Confirm your password"></el-input>
-          <p v-show="show_pass_msg">Passwords do not match!</p>
-          <p v-show="show_confirm_msg">Both passwords match!</p>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" native-type="submit" :disabled="isDisabled">Signup</el-button>
-        </el-form-item>
-        <el-form-item>
-          <RouterLink to="/login">Already have an account? Login</RouterLink>
-        </el-form-item>
-      </el-form>
-    </el-card>
+  <div class="wrapper-container">
+    <div class="wrapper">
+      <div class="title">Signup</div>
+      <div class="form-container">
+        <form @submit.prevent="handleSignup" class="signup-form">
+          <div class="field">
+            <input type="text" v-model="form.username" placeholder="Username" required>
+          </div>
+          <div class="field">
+            <input type="password" v-model="form.password" placeholder="Password" required>
+          </div>
+          <div class="field">
+            <input type="password" v-model="form.confirmPassword" placeholder="Confirm password" required>
+            <div v-if="form.password !== form.confirmPassword" class="error">Passwords do not match</div>
+          </div>
+          <div class="field btn">
+            <input type="submit" value="Signup">
+          </div>
+          <div class="signup-link">Already have an account? <RouterLink to="/login">Login!</RouterLink></div>
+          <div v-if="usernameTaken" class="error">Username is already taken</div>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, watch } from 'vue'
-import axios from 'axios'
+import { reactive, ref } from 'vue'
+import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
-const show_user_msg = ref(false)
-const show_pass_msg = ref(false)
-const show_confirm_msg = ref(false)
-const isDisabled = ref(true)
+const store = useStore()
+const router = useRouter()
+const usernameTaken = ref(false)
 const form = reactive({
   username: '',
   password: '',
   confirmPassword: ''
 })
-const apiUrl = 'http://localhost:3000/users'
-const router = useRouter()
 
 const handleSignup = async () => {
-  try {
-    const response = await axios.post(apiUrl, {
-      username: form.username,
-      password: form.password
-    })
-    console.log('Server response:', response.data)
+  usernameTaken.value = false
+
+  if (form.password !== form.confirmPassword) {
+    return
+  }
+
+  const result = await store.dispatch('signup', form)
+  if (result.success) {
     router.push('/')
-  } catch (error) {
-    alert('Error signing up: ' + error.message);
+  } else if (result.message === 'Username is already taken') {
+    usernameTaken.value = true
+  } else {
+    alert(result.message)
   }
 }
-
-watch(() => form.username, async (username) => {
-  if (username !== ''){
-    try {
-      const response = await axios.get(`${apiUrl}?username=${username}`)
-      show_user_msg.value = response.data.length > 0
-    } catch (error) {}
-  }
-})
-
-watch([() => form.password, () => form.confirmPassword], ([password, confirmPassword]) => {
-  if (password !== '' || confirmPassword !== '') {
-    show_pass_msg.value = password !== confirmPassword
-    show_confirm_msg.value = password === confirmPassword
-  }
-  else {
-    show_pass_msg.value = false
-  }
-})
-
-watch([() => form.username, () => form.password, () => form.confirmPassword, show_user_msg, show_pass_msg], ([username, password, confirmPassword, user_msg, pass_msg]) => {
-  isDisabled.value = (username === '' || password === '' || confirmPassword === '' || user_msg || pass_msg)
-})
-
 </script>
 
 <style scoped>
-.signup-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f0f2f5;
-}
-
-.signup-card {
-  width: 400px;
-  padding: 20px;
-  background: #fff;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-}
-
-el-form-item {
-  margin-bottom: 20px;
-}
-
-el-form-item:last-child {
-  margin-bottom: 0;
-}
+@import '../assets/form.css';
 </style>

@@ -1,15 +1,26 @@
-<script setup>
-import { RouterLink } from 'vue-router'
-</script>
-
-
 <template>
-  <h1>This is the dashboard.</h1>
-  <h3><RouterLink to="/login">Login</RouterLink></h3>
-  <h3><RouterLink to="/signup">Signup</RouterLink></h3>
+  <div>
+    <h1 v-if="user">Welcome, {{ user.username }}</h1>
+    <button v-if="user" @click="handleLogout">Logout</button>
+  </div>
 </template>
 
+<script setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
-<style>
+const store = useStore()
+const router = useRouter()
+
+const user = computed(() => store.getters.user)
+
+const handleLogout = () => {
+  store.dispatch('logout')
+  router.push('/login')
+}
+</script>
+
+<style scoped>
 
 </style>
