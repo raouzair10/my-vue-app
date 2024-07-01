@@ -4,12 +4,31 @@
       "id": "1",
       "username": "uzair",
       "password": "1234"
+    },
+    {
+      "id": "83b1",
+      "username": "user1",
+      "password": "123"
     }
   ],
-  "tasks": [
+  "todos": [
     {
+      "id": "b12d",
       "user_id": "1",
-      "title": ""
+      "title": "Task 1",
+      "completed": false
+    },
+    {
+      "id": "b",
+      "user_id": "1",
+      "title": "Task 2",
+      "completed": false
+    },
+    {
+      "id": "b12",
+      "user_id": "2",
+      "title": "Task 3",
+      "completed": false
     }
   ]
 }
