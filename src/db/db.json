@@ -6,29 +6,47 @@
       "password": "1234"
     },
     {
-      "id": "83b1",
+      "id": "2",
       "username": "user1",
       "password": "123"
     }
   ],
   "todos": [
     {
-      "id": "b12d",
-      "user_id": "1",
-      "title": "Task 1",
-      "completed": false
+      "id": "1",
+      "title": "Buy groceries",
+      "priority": "High",
+      "completed": false,
+      "userId": "2",
+      "createdAt": "2024-07-01T12:00:00Z",
+      "updatedAt": "2024-07-01T12:00:00Z"
     },
     {
-      "id": "b",
-      "user_id": "1",
-      "title": "Task 2",
-      "completed": false
+      "id": "2",
+      "title": "Call the plumber",
+      "priority": "Medium",
+      "completed": false,
+      "userId": "2",
+      "createdAt": "2024-07-02T09:00:00Z",
+      "updatedAt": "2024-07-02T09:00:00Z"
     },
     {
-      "id": "b12",
-      "user_id": "2",
-      "title": "Task 3",
-      "completed": false
+      "id": "3",
+      "title": "Finish Vue.js project",
+      "priority": "High",
+      "completed": true,
+      "userId": "2",
+      "createdAt": "2024-07-03T14:00:00Z",
+      "updatedAt": "2024-07-03T14:00:00Z"
+    },
+    {
+      "id": "4",
+      "title": "Prepare presentation",
+      "priority": "Low",
+      "completed": false,
+      "userId": "2",
+      "createdAt": "2024-07-04T16:00:00Z",
+      "updatedAt": "2024-07-04T16:00:00Z"
     }
   ]
 }

@@ -5,23 +5,23 @@ const apiUrl = 'http://localhost:3000'
 
 const store = createStore({
   state: {
-    user: JSON.parse(localStorage.getItem('user')) || null,
+    user: JSON.parse(sessionStorage.getItem('user')) || null,
     todos: [],
   },
   mutations: {
     setUser(state, user) {
       state.user = user
-      localStorage.setItem('user', JSON.stringify(user))
+      sessionStorage.setItem('user', JSON.stringify(user))
     },
     clearUser(state) {
       state.user = null
-      localStorage.removeItem('user')
+      sessionStorage.removeItem('user')
     },
     setTodos(state, todos) {
       state.todos = todos
     },
     addTodo(state, todo) {
-
+      state.todos.push(todo)
     },
     updateTodo(state, todo) {
 
@@ -69,9 +69,9 @@ const store = createStore({
     logout({ commit }) {
       commit('clearUser')
     },
-    async fetchTodos({ commit }, user_id) {
+    async fetchTodos({ commit }, userId) {
       try {
-        const response = await axios.get(`${apiUrl}/todos?user_id=${user_id}`)
+        const response = await axios.get(`${apiUrl}/todos?userId=${userId}`)
         const todos = response.data
         commit('setTodos', todos)
       } catch (error) {
