@@ -1,88 +1,39 @@
 {
   "users": [
     {
-      "id": "1",
-      "username": "uzair",
-      "password": "1234"
+      "id": "u-id1720007804612",
+      "username": "user1",
+      "password": "123"
     },
     {
-      "id": "2",
-      "username": "user1",
+      "id": "u-id1720008410497",
+      "username": "user2",
+      "password": "123"
+    },
+    {
+      "id": "u-id1720008589775",
+      "username": "user3",
       "password": "123"
     }
   ],
   "todos": [
     {
-      "id": "1",
-      "title": "Buy groceries",
-      "priority": "High",
-      "completed": true,
-      "userId": "2",
-      "createdAt": "2024-07-01T12:00:00Z",
-      "updatedAt": "2024-07-03T09:22:54.041Z"
-    },
-    {
-      "id": "2",
-      "title": "Call the plumber",
-      "priority": "Medium",
-      "completed": false,
-      "userId": "2",
-      "createdAt": "2024-07-02T09:00:00Z",
-      "updatedAt": "2024-07-03T09:23:09.870Z"
-    },
-    {
-      "id": "3",
-      "title": "Finish Vue.js project",
-      "priority": "High",
-      "completed": false,
-      "userId": "2",
-      "createdAt": "2024-07-03T14:00:00Z",
-      "updatedAt": "2024-07-03T09:22:55.727Z"
-    },
-    {
-      "id": "4",
-      "title": "Prepare presentation",
+      "id": "t-id1720008524612",
+      "title": "Complete Project Report",
       "priority": "Low",
       "completed": false,
-      "userId": "2",
-      "createdAt": "2024-07-04T16:00:00Z",
-      "updatedAt": "2024-07-03T09:26:20.575Z"
+      "userId": "u-id1720007804612",
+      "createdAt": "2024-07-03T12:08:44.612Z",
+      "updatedAt": "2024-07-03T12:08:44.612Z"
     },
     {
-      "id": "1",
-      "title": "Buy groceries",
-      "priority": "High",
-      "completed": true,
-      "userId": "2",
-      "createdAt": "2024-07-01T12:00:00Z",
-      "updatedAt": "2024-07-03T09:22:54.041Z"
-    },
-    {
-      "id": "2",
-      "title": "Call the plumber",
-      "priority": "Medium",
-      "completed": false,
-      "userId": "2",
-      "createdAt": "2024-07-02T09:00:00Z",
-      "updatedAt": "2024-07-03T09:23:09.870Z"
-    },
-    {
-      "id": "3",
-      "title": "Finish Vue.js project",
+      "id": "t-id1720008533853",
+      "title": "Complete Project Report",
       "priority": "High",
       "completed": false,
-      "userId": "2",
-      "createdAt": "2024-07-03T14:00:00Z",
-      "updatedAt": "2024-07-03T09:22:55.727Z"
-    },
-    {
-      "id": "4",
-      "title": "Prepare presentation",
-      "priority": "Low",
-      "completed": false,
-      "userId": "2",
-      "createdAt": "2024-07-04T16:00:00Z",
-      "updatedAt": "2024-07-03T09:26:20.575Z"
+      "userId": "u-id1720007804612",
+      "createdAt": "2024-07-03T12:08:53.853Z",
+      "updatedAt": "2024-07-03T12:10:19.403Z"
     }
   ]
 }

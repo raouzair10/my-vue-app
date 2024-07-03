@@ -1,9 +1,19 @@
+<template>
+  <div class="dashboard">
+    <Sidebar />
+    <TodoList />
+  </div>
+</template>
+
 <script setup>
-import Dashboard from '../components/Dashboard.vue'
+import Sidebar from '../components/Sidebar.vue'
+import TodoList from '../components/TodoList.vue'
 </script>
 
-<template>
-  <main>
-    <Dashboard />
-  </main>
-</template>
+<style scoped>
+.dashboard {
+  height: 100%;
+  display: flex;
+  background: -webkit-linear-gradient(left, #003366, #004080, #0059b3, #0073e6);
+}
+</style>

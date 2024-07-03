@@ -15,6 +15,7 @@ const store = createStore({
     },
     clearUser(state) {
       state.user = null
+      state.todos = []
       sessionStorage.removeItem('user')
     },
     setTodos(state, todos) {
@@ -59,7 +60,9 @@ const store = createStore({
         if (response.data.length > 0) {
           throw new Error('Username is already taken')
         }
+        const uniqueId = 'u-id' + (new Date()).getTime()
         const newUser = await axios.post(`${apiUrl}/users`, {
+          'id': uniqueId,
           'username': username,
           'password': password,
         })
@@ -81,10 +84,17 @@ const store = createStore({
         console.log(error)
       }
     },
+    async addTodo({ commit }, newTodo) {
+      try {
+        await axios.post(`${apiUrl}/todos`, newTodo)
+        commit('addTodo', newTodo)
+      } catch (error) {
+        console.log(error)
+      }
+    },
     async deleteTodo({ commit }, todoId) {
       try {
         await axios.delete(`${apiUrl}/todos/${todoId}`)
-        console.log("Deleted successfully")
         commit('deleteTodo', todoId)
       } catch (error) {
         console.log(error)

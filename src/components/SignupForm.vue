@@ -41,18 +41,16 @@ const form = reactive({
 
 const handleSignup = async () => {
   usernameTaken.value = false
-
   if (form.password !== form.confirmPassword) {
     return
   }
-
   const result = await store.dispatch('signup', form)
   if (result.success) {
     router.push('/')
   } else if (result.message === 'Username is already taken') {
     usernameTaken.value = true
   } else {
-    alert(result.message)
+    console.log(result.message)
   }
 }
 </script>
