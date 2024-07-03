@@ -23,11 +23,14 @@ const store = createStore({
     addTodo(state, todo) {
       state.todos.push(todo)
     },
-    updateTodo(state, todo) {
-
+    updateTodo(state, updatedTodo) {
+      const index = state.todos.findIndex(todo => todo.id === updatedTodo.id)
+    if (index !== -1) {
+      state.todos.splice(index, 1, updatedTodo)
+    }
     },
-    deleteTodo(state, todo) {
-
+    deleteTodo(state, todoId) {
+      state.todos = state.todos.filter(todo => todo.id !== todoId)
     }
   },
   actions: {
@@ -74,6 +77,23 @@ const store = createStore({
         const response = await axios.get(`${apiUrl}/todos?userId=${userId}`)
         const todos = response.data
         commit('setTodos', todos)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async deleteTodo({ commit }, todoId) {
+      try {
+        await axios.delete(`${apiUrl}/todos/${todoId}`)
+        console.log("Deleted successfully")
+        commit('deleteTodo', todoId)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async updateTodo({ commit }, todo) {
+      try {
+        const response = await axios.put(`${apiUrl}/todos/${todo.id}`, todo)
+        commit('updateTodo', response.data)
       } catch (error) {
         console.log(error)
       }

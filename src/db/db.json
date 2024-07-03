@@ -16,10 +16,10 @@
       "id": "1",
       "title": "Buy groceries",
       "priority": "High",
-      "completed": false,
+      "completed": true,
       "userId": "2",
       "createdAt": "2024-07-01T12:00:00Z",
-      "updatedAt": "2024-07-01T12:00:00Z"
+      "updatedAt": "2024-07-03T09:22:54.041Z"
     },
     {
       "id": "2",
@@ -28,16 +28,16 @@
       "completed": false,
       "userId": "2",
       "createdAt": "2024-07-02T09:00:00Z",
-      "updatedAt": "2024-07-02T09:00:00Z"
+      "updatedAt": "2024-07-03T09:23:09.870Z"
     },
     {
       "id": "3",
       "title": "Finish Vue.js project",
       "priority": "High",
-      "completed": true,
+      "completed": false,
       "userId": "2",
       "createdAt": "2024-07-03T14:00:00Z",
-      "updatedAt": "2024-07-03T14:00:00Z"
+      "updatedAt": "2024-07-03T09:22:55.727Z"
     },
     {
       "id": "4",
@@ -46,7 +46,43 @@
       "completed": false,
       "userId": "2",
       "createdAt": "2024-07-04T16:00:00Z",
-      "updatedAt": "2024-07-04T16:00:00Z"
+      "updatedAt": "2024-07-03T09:26:20.575Z"
+    },
+    {
+      "id": "1",
+      "title": "Buy groceries",
+      "priority": "High",
+      "completed": true,
+      "userId": "2",
+      "createdAt": "2024-07-01T12:00:00Z",
+      "updatedAt": "2024-07-03T09:22:54.041Z"
+    },
+    {
+      "id": "2",
+      "title": "Call the plumber",
+      "priority": "Medium",
+      "completed": false,
+      "userId": "2",
+      "createdAt": "2024-07-02T09:00:00Z",
+      "updatedAt": "2024-07-03T09:23:09.870Z"
+    },
+    {
+      "id": "3",
+      "title": "Finish Vue.js project",
+      "priority": "High",
+      "completed": false,
+      "userId": "2",
+      "createdAt": "2024-07-03T14:00:00Z",
+      "updatedAt": "2024-07-03T09:22:55.727Z"
+    },
+    {
+      "id": "4",
+      "title": "Prepare presentation",
+      "priority": "Low",
+      "completed": false,
+      "userId": "2",
+      "createdAt": "2024-07-04T16:00:00Z",
+      "updatedAt": "2024-07-03T09:26:20.575Z"
     }
   ]
 }
