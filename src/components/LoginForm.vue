@@ -14,7 +14,6 @@
             <input type="submit" value="Login">
           </div>
           <div class="signup-link">Don't have an account? <RouterLink to="/signup">Signup!</RouterLink></div>
-          <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
         </form>
       </div>
     </div>
@@ -22,13 +21,13 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
 
 const store = useStore()
 const router = useRouter()
-const errorMessage = ref('')
 
 const form = reactive({
   username: '',
@@ -40,7 +39,7 @@ const handleLogin = async () => {
   if (result.success) {
     router.push('/')
   } else {
-    errorMessage.value = result.message
+    ElMessage.error(result.message)
   }
 }
 </script>

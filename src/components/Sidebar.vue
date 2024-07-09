@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar">
-    <h1 v-if="user">Welcome, {{ user.username }}</h1>
+    <h1 v-if="user">{{ user.username }}</h1>
     <el-button v-if="user" type="primary" @click="handleLogout">Logout</el-button>
     <h2>Add New Task</h2>
     <el-input v-model="newTaskTitle" placeholder="Task Title"></el-input>
@@ -32,40 +32,70 @@ const handleLogout = () => {
 }
 
 const addTask = async () => {
-  if (newTaskTitle.value && newTaskPriority.value) {
-    const currentDate = new Date()
-    const uniqueId = 't-id' + (new Date()).getTime()
-    const newTask = {
-      id: uniqueId,
-      title: newTaskTitle.value,
-      priority: newTaskPriority.value,
-      completed: false,
-      userId: user.value.id,
-      createdAt: currentDate,
-      updatedAt: currentDate,
+  try {
+    if (newTaskTitle.value && newTaskPriority.value) {
+      const newTask = {
+        title: newTaskTitle.value,
+        priority: newTaskPriority.value,
+        completed: false,
+        userId: user.value._id,
+      }
+      await store.dispatch('addTodo', newTask)
+      ElMessage.success('Task added successfully')
+      newTaskTitle.value = ''
+      newTaskPriority.value = ''
+    } else {
+      throw new Error('Please fill in all fields')
     }
-    await store.dispatch('addTodo', newTask)
-    ElMessage.success('Task added successfully')
-    newTaskTitle.value = ''
-    newTaskPriority.value = ''
-  } else {
-    ElMessage.error('Please fill in all fields')
+  } catch (error) {
+    ElMessage.error(error.message)
   }
 }
 </script>
 
 <style scoped>
 .sidebar {
+  position: fixed;
   height: 100vh;
   width: 250px;
   padding: 20px;
-  background-color: #f7f7f7;
+  background-color: #f0f4f8;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
 }
 
 h1, h2 {
   text-align: center;
+  color: #333;
+  font-weight: 500;
+}
+
+.el-button {
+  margin: 0 auto;
+  background-color: #0073e6;
+  border-color: #0073e6;
+  color: #fff;
+}
+
+.el-button:hover {
+  background-color: #005bb5;
+  border-color: #005bb5;
+}
+
+.el-input,
+.el-select {
+  margin-bottom: 10px;
+}
+
+.el-input input,
+.el-select .el-input__inner {
+  font-family: 'Roboto', sans-serif;
+}
+
+.el-message {
+  font-family: 'Roboto', sans-serif;
 }
 </style>

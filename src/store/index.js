@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 
-const apiUrl = 'http://localhost:3000'
+const apiUrl = 'http://localhost:5000/api'
 
 const store = createStore({
   state: {
@@ -25,51 +25,34 @@ const store = createStore({
       state.todos.push(todo)
     },
     updateTodo(state, updatedTodo) {
-      const index = state.todos.findIndex(todo => todo.id === updatedTodo.id)
-    if (index !== -1) {
-      state.todos.splice(index, 1, updatedTodo)
-    }
+      const index = state.todos.findIndex(todo => todo._id === updatedTodo._id)
+      if (index !== -1) {
+        state.todos.splice(index, 1, updatedTodo)
+      }
     },
     deleteTodo(state, todoId) {
-      state.todos = state.todos.filter(todo => todo.id !== todoId)
+      state.todos = state.todos.filter(todo => todo._id !== todoId)
     }
   },
   actions: {
     async login({ commit }, { username, password }) {
       try {
-        const response = await axios.get(`${apiUrl}/users?username=${username}`)
-        const users = response.data
-        if (users.length > 0) {
-          const user = users.find(user => user.password === password)
-          if (user) {
-            commit('setUser', user)
-            return { success: true }
-          } else {
-            throw new Error('Invalid password')
-          }
-        } else {
-          throw new Error('User does not exist')
-        }
+        const response = await axios.post(`${apiUrl}/users/login`, { username, password })
+        const user = response.data
+        commit('setUser', user)
+        return { success: true }
       } catch (error) {
-        return { success: false, message: error.message }
+        return { success: false, message: error.response.data.message }
       }
     },
     async signup({ commit }, { username, password }) {
       try {
-        const response = await axios.get(`${apiUrl}/users?username=${username}`)
-        if (response.data.length > 0) {
-          throw new Error('Username is already taken')
-        }
-        const uniqueId = 'u-id' + (new Date()).getTime()
-        const newUser = await axios.post(`${apiUrl}/users`, {
-          'id': uniqueId,
-          'username': username,
-          'password': password,
-        })
-        commit('setUser', newUser.data)
+        const response = await axios.post(`${apiUrl}/users/signup`, { username, password })
+        const user = response.data
+        commit('setUser', user)
         return { success: true }
       } catch (error) {
-        return { success: false, message: error.message }
+        return { success: false, message: error.response.data.message }
       }
     },
     logout({ commit }) {
@@ -77,7 +60,8 @@ const store = createStore({
     },
     async fetchTodos({ commit }, userId) {
       try {
-        const response = await axios.get(`${apiUrl}/todos?userId=${userId}`)
+        console.log(userId)
+        const response = await axios.get(`${apiUrl}/todos/${userId}`)
         const todos = response.data
         commit('setTodos', todos)
       } catch (error) {
@@ -86,8 +70,8 @@ const store = createStore({
     },
     async addTodo({ commit }, newTodo) {
       try {
-        await axios.post(`${apiUrl}/todos`, newTodo)
-        commit('addTodo', newTodo)
+        const response = await axios.post(`${apiUrl}/todos`, newTodo)
+        commit('addTodo', response.data)
       } catch (error) {
         console.log(error)
       }
@@ -102,7 +86,7 @@ const store = createStore({
     },
     async updateTodo({ commit }, todo) {
       try {
-        const response = await axios.put(`${apiUrl}/todos/${todo.id}`, todo)
+        const response = await axios.put(`${apiUrl}/todos/${todo._id}`, todo)
         commit('updateTodo', response.data)
       } catch (error) {
         console.log(error)

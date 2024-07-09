@@ -87,5 +87,13 @@
 .error {
   color: red;
   font-size: 14px;
-  margin-top: 5px;
+  margin-left: 5px;
+  margin-top: 1px;
+}
+
+.match {
+  color: green;
+  font-size: 14px;
+  margin-left: 5px;
+  margin-top: 1px;
 }

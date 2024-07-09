@@ -12,13 +12,13 @@
           </div>
           <div class="field">
             <input type="password" v-model="form.confirmPassword" placeholder="Confirm password" required>
-            <div v-if="form.password !== form.confirmPassword" class="error">Passwords do not match</div>
+            <div v-if="form.password && form.confirmPassword && form.password !== form.confirmPassword" class="error">Passwords do not match</div>
+            <div v-if="form.password && form.confirmPassword && form.password === form.confirmPassword" class="match">Passwords match</div>
           </div>
           <div class="field btn">
             <input type="submit" value="Signup">
           </div>
           <div class="signup-link">Already have an account? <RouterLink to="/login">Login!</RouterLink></div>
-          <div v-if="usernameTaken" class="error">Username is already taken</div>
         </form>
       </div>
     </div>
@@ -26,29 +26,30 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
 
 const store = useStore()
 const router = useRouter()
-const usernameTaken = ref(false)
 const form = reactive({
   username: '',
   password: '',
   confirmPassword: ''
 })
 
+const pattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/
+
 const handleSignup = async () => {
-  usernameTaken.value = false
-  if (form.password !== form.confirmPassword) {
+  if (form.password !== form.confirmPassword || !pattern.test(form.password)) {
     return
   }
   const result = await store.dispatch('signup', form)
   if (result.success) {
     router.push('/')
   } else if (result.message === 'Username is already taken') {
-    usernameTaken.value = true
+    ElMessage.error(result.message)
   } else {
     console.log(result.message)
   }
