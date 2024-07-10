@@ -24,17 +24,17 @@ This project is a todo list application built with Vue.js, using the Composition
 - MongoDB
 
 ### Clone the Repository
-bash
+```bash
 git clone https://github.com/raouzair10/my-vue-app.git
 cd my-vue-app
-
+```
 
 ### Install Dependencies
-bash
+```bash
 npm install
 cd backend
 npm install
-
+```
 
 ### Environment Variables
 Create a .env file in the backend directory and add the following environment variables:
@@ -43,13 +43,13 @@ MONGO_URI=<your-mongodb-uri>
 
 ### Running the Application
 #### Frontend
-bash
+```bash
 npm run dev
-
+```
 #### Backend
-bash
+```bash
 cd backend
 npm start
-
+```
 
 Replace <your-mongodb-uri> with your actual MongoDB URI. After setting up and running both frontend and backend, you can access the application at http://localhost:5173/ by default.
