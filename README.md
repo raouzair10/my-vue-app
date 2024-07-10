@@ -1,35 +1,55 @@
-# my-app
+# My Vue App
 
-This template should help get you started developing with Vue 3 in Vite.
+## Description
+This project is a todo list application built with Vue.js, using the Composition API and Vuex for state management. It includes user authentication, allowing users to sign up, log in, and manage their tasks. The backend is built with Node.js and MongoDB.
 
-## Recommended IDE Setup
+## Features
+- User authentication (signup and login)
+- Task management (add, update, delete tasks)
+- User-specific tasks
+- Responsive design using Element Plus
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## Technologies Used
+- Vue.js
+- Vuex
+- Element Plus
+- Node.js
+- Express
+- MongoDB
 
 ## Project Setup
 
-```sh
+### Prerequisites
+- Node.js
+- MongoDB
+
+### Clone the Repository
+bash
+git clone https://github.com/raouzair10/my-vue-app.git
+cd my-vue-app
+
+
+### Install Dependencies
+bash
 npm install
-```
+cd backend
+npm install
 
-### Compile and Hot-Reload for Development
 
-```sh
+### Environment Variables
+Create a .env file in the backend directory and add the following environment variables:
+MONGO_URI=<your-mongodb-uri>
+
+
+### Running the Application
+#### Frontend
+bash
 npm run dev
-```
 
-### Compile and Minify for Production
+#### Backend
+bash
+cd backend
+npm start
 
-```sh
-npm run build
-```
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+Replace <your-mongodb-uri> with your actual MongoDB URI. After setting up and running both frontend and backend, you can access the application at http://localhost:5173/ by default.
