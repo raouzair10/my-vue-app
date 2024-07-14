@@ -3,7 +3,7 @@
     <div class="heading">
       <h2>My Tasks</h2>
     </div>
-    <el-table :data="localTodos" :row-class-name="rowClassName">
+    <el-table :data="localTodos">
       <el-table-column width="60">
         <template #default="scope">
           <el-button type="danger" size="small" @click="deleteTodo(scope.row._id)">x</el-button>
@@ -48,6 +48,7 @@
     </el-table>
   </div>
 </template>
+
 <script setup>
 import { computed, onMounted, ref, nextTick } from 'vue'
 import { useStore } from 'vuex'
@@ -99,10 +100,8 @@ const updateTask = async (todo) => {
   todo.isEditing = false
 }
 
-const rowClassName = ({ row }) => {
-  return row.priority
-}
 </script>
+
 <style scoped>
 .heading {
   display: flex;
@@ -111,6 +110,7 @@ const rowClassName = ({ row }) => {
   margin-top: 20px;
   margin-bottom: 20px;
   font-family: 'Roboto', sans-serif;
+  color: #fff;
 }
 
 .todo-list {
@@ -119,26 +119,31 @@ const rowClassName = ({ row }) => {
   height: 100%;
   flex-grow: 1;
   padding: 20px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #30363C;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   min-height: 100vh;
-}
-
-:deep(.High) {
-  background-color: rgb(255, 0, 0, 0.2);
-}
-
-:deep(.Medium) {
-  background-color: rgba(255, 165, 0, 0.2);
-}
-
-:deep(.Low) {
-  background-color: rgba(0, 128, 0, 0.2);
+  color: #fff;
 }
 
 .el-table {
   font-family: 'Roboto', sans-serif;
+  background-color: #444;
+  color: #fff;
+}
+
+:deep(.el-table .el-table__row) {
+  background-color: #30363C;
+  color: #fff;
+}
+
+:deep(.el-table .el-table__row:hover) {
+  background-color: #50575E !important;
+  color: #fff !important;
+}
+
+:deep(.el-table .el-table__row .el-table__cell) {
+  background-color: inherit !important;
 }
 
 .el-button {
@@ -154,9 +159,27 @@ const rowClassName = ({ row }) => {
 
 .el-checkbox .el-checkbox__label {
   font-family: 'Roboto', sans-serif;
+  color: #fff;
 }
 
 .el-select .el-input__inner {
   font-family: 'Roboto', sans-serif;
+  color: #fff;
+  background-color: #555;
+  border-color: #666;
+}
+
+.el-select .el-input__inner:hover {
+  border-color: #888;
+}
+
+.el-input__inner {
+  color: #fff;
+  background-color: #555;
+  border-color: #666;
+}
+
+.el-input__inner:hover {
+  border-color: #888;
 }
 </style>

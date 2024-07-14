@@ -59,43 +59,10 @@ const addTask = async () => {
   height: 100vh;
   width: 250px;
   padding: 20px;
-  background-color: #f0f4f8;
+  background-color: #24282C;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: 'Roboto', sans-serif;
-}
-
-h1, h2 {
-  text-align: center;
-  color: #333;
-  font-weight: 500;
-}
-
-.el-button {
-  margin: 0 auto;
-  background-color: #0073e6;
-  border-color: #0073e6;
   color: #fff;
-}
-
-.el-button:hover {
-  background-color: #005bb5;
-  border-color: #005bb5;
-}
-
-.el-input,
-.el-select {
-  margin-bottom: 10px;
-}
-
-.el-input input,
-.el-select .el-input__inner {
-  font-family: 'Roboto', sans-serif;
-}
-
-.el-message {
-  font-family: 'Roboto', sans-serif;
 }
 </style>
