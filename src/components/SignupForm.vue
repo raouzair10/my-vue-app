@@ -42,7 +42,11 @@ const form = reactive({
 const pattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/
 
 const handleSignup = async () => {
-  if (form.password !== form.confirmPassword || !pattern.test(form.password)) {
+  if (form.password !== form.confirmPassword) {
+    return
+  }
+  if (!pattern.test(form.password)) {
+    ElMessage.error('Password should be 8-16 characters long, and should contain at least an uppercase letter, a lowercase letter, a number, a special character, and no spaces')
     return
   }
   const result = await store.dispatch('signup', form)

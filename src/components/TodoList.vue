@@ -76,7 +76,6 @@ const startEditing = (todo) => {
 
 onMounted(async () => {
   if (user.value) {
-    console.log(user.value)
     await store.dispatch('fetchTodos', user.value._id)
   } else {
     ElMessage.error('User not authenticated')

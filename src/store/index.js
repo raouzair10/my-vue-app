@@ -60,7 +60,6 @@ const store = createStore({
     },
     async fetchTodos({ commit }, userId) {
       try {
-        console.log(userId)
         const response = await axios.get(`${apiUrl}/todos/${userId}`)
         const todos = response.data
         commit('setTodos', todos)
