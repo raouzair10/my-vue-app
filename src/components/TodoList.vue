@@ -119,7 +119,7 @@ const updateTask = async (todo) => {
   height: 100%;
   flex-grow: 1;
   padding: 20px;
-  background-color: #30363C;
+  background-color: #435585;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   min-height: 100vh;
@@ -128,22 +128,21 @@ const updateTask = async (todo) => {
 
 .el-table {
   font-family: 'Roboto', sans-serif;
-  background-color: #444;
+  background-color: #435585;
   color: #fff;
 }
 
 :deep(.el-table .el-table__row) {
-  background-color: #30363C;
+  background-color: #435585;
   color: #fff;
 }
 
-:deep(.el-table .el-table__row:hover) {
-  background-color: #50575E !important;
-  color: #fff !important;
+:deep(.el-table__row:hover) {
+  color: #000;
 }
 
 :deep(.el-table .el-table__row .el-table__cell) {
-  background-color: inherit !important;
+  background-color: inherit;
 }
 
 .el-button {
