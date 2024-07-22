@@ -15,8 +15,13 @@
             <div v-if="form.password && form.confirmPassword && form.password !== form.confirmPassword" class="error">Passwords do not match</div>
             <div v-if="form.password && form.confirmPassword && form.password === form.confirmPassword" class="match">Passwords match</div>
           </div>
-          <div class="field btn">
-            <input type="submit" value="Signup">
+          <div>
+            <div v-if="isCapslockOn" class="capslock">
+              CapsLock is On
+            </div>
+            <div class="field btn">
+              <input type="submit" value="Signup">
+            </div>
           </div>
           <div class="signup-link">Already have an account? <RouterLink to="/login">Login!</RouterLink></div>
         </form>
@@ -26,7 +31,7 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
@@ -38,7 +43,7 @@ const form = reactive({
   password: '',
   confirmPassword: ''
 })
-
+const isCapslockOn = ref(false)
 const pattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/
 
 const handleSignup = async () => {
@@ -58,6 +63,21 @@ const handleSignup = async () => {
     console.log(result.message)
   }
 }
+
+const handleKeyPress = (event) => {
+  isCapslockOn.value = event.getModifierState('CapsLock')
+}
+
+onMounted(() => {
+  window.addEventListener('keyup', handleKeyPress)
+  window.addEventListener('keydown', handleKeyPress)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keyup', handleKeyPress)
+  window.removeEventListener('keydown', handleKeyPress)
+})
+
 </script>
 
 <style scoped>
