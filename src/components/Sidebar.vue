@@ -26,8 +26,9 @@ const user = computed(() => store.getters.user)
 const newTaskTitle = ref('')
 const newTaskPriority = ref('')
 
-const handleLogout = () => {
-  store.dispatch('logout')
+const handleLogout = async () => {
+  await store.dispatch('logout')
+  ElMessage.success('Logged out successfully')
   router.push('/login')
 }
 

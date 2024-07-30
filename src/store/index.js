@@ -37,10 +37,9 @@ const store = createStore({
   actions: {
     async login({ commit }, { username, password }) {
       try {
-        // const response = await axios.post(`${apiUrl}`, { transition: 'LOGIN', data: {username, password} })
-        const response = await axios.post(`${apiUrl}/users/login`, { username, password })
+        const response = await axios.post(`http://localhost:3000`, { transition: 'LOGIN', data: {username, password} })
+        // const response = await axios.post(`${apiUrl}/users/login`, { username, password })
         const user = response.data
-        console.log(user)
         commit('setUser', user)
         return { success: true }
       } catch (error) {
@@ -57,12 +56,18 @@ const store = createStore({
         return { success: false, message: error.response.data.message }
       }
     },
-    logout({ commit }) {
-      commit('clearUser')
+    async logout({ commit }) {
+      try {
+        await axios.post(`http://localhost:3000`, { transition: 'LOGOUT' })
+        commit('clearUser')
+      } catch (error) {
+        console.log(error)
+      }
     },
     async fetchTodos({ commit }, userId) {
       try {
-        const response = await axios.get(`${apiUrl}/todos/${userId}`)
+        const response = await axios.post(`http://localhost:3000`, { transition: 'FETCH_TODOS', data: {userId} })
+        // const response = await axios.get(`${apiUrl}/todos/${userId}`)
         const todos = response.data
         commit('setTodos', todos)
       } catch (error) {
@@ -71,7 +76,9 @@ const store = createStore({
     },
     async addTodo({ commit }, newTodo) {
       try {
-        const response = await axios.post(`${apiUrl}/todos`, newTodo)
+        const response = await axios.post(`http://localhost:3000`, { transition: 'ADD_TODO', data: {newTodo} })
+        // const response = await axios.post(`${apiUrl}/todos`, newTodo)
+        console.log(response.data)
         commit('addTodo', response.data)
       } catch (error) {
         console.log(error)

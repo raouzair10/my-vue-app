@@ -6,8 +6,7 @@ const userMachine = setup({
         receiveValues: assign({
             url: ({event}) => event.value.url,
             request: ({event}) => event.value.request,
-            username: ({event}) => event.value.username,
-            password: ({event}) => event.value.password,
+            data: ({event}) => event.value.data,
             success: ({event}) => event.value.success,
             failure: ({event}) => event.value.failure
         })
@@ -19,7 +18,7 @@ const userMachine = setup({
                 const res = await axios({
                     method: context.input.request,
                     url: context.input.url,
-                    data: { username: context.input.username, password: context.input.password }
+                    data: context.input.data
                 })
                 return res.data
             } catch (error) {
@@ -29,7 +28,7 @@ const userMachine = setup({
         })
       }
   }).createMachine({
-    id: "usermachine",
+    id: "fetchmachine",
     initial: "idle",
     context: {},
     states: {
@@ -43,7 +42,7 @@ const userMachine = setup({
         },
         handlingRequest: {
             invoke: {
-                id: 'userRequest',
+                id: 'fetchRequest',
                 src: 'sendRequest',
                 input: ({ context }) => context,
                 onDone: {

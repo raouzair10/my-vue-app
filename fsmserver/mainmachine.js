@@ -1,5 +1,5 @@
 const { createMachine, assign } = require("xstate");
-const userMachine = require('./usermachine');
+const fetchMachine = require('./fetchmachine');
 
 const dbUrl = 'http://localhost:5000/api'
 
@@ -14,48 +14,23 @@ const mainMachine = createMachine({
                     target: "signup",
                 },
                 LOGIN: {
-                    target: "sendingRequest",
-                    actions: [assign({
-                        username: ({event}) => event.value.username,
-                        password: ({event}) => event.value.password,
-                        reqType: 'login'
-                    })]
-                }
-            }
-        },
-        signup: {
-            on: {
-                GO_TO_LOGIN: {
-                    target: "login",
-                },
-                SIGNUP: {
-                    target: "sendingRequest",
-                    actions: [assign({
-                        username: ({event}) => event.value.username,
-                        password: ({event}) => event.value.password,
-                        reqType: 'signup'
-                    })]
-                }
-            }
-        },
-        sendingRequest: {
-            entry: [
-                'spawnUserMachine',
-                async ({context}) => {
-                    context.userMachineRef.send({
-                        type: 'SEND_REQ',
-                        value: {
-                            url: `${dbUrl}/users/${context.reqType}`,
-                            request: 'post',
-                            username: context.username,
-                            password: context.password,
-                            success: 'SUCCESS',
-                            failure: 'FAILURE'
+                    actions: [
+                        assign({
+                            data: ({event}) => event.value
+                        }),
+                        'spawnFetchMachine',
+                        async ({context}) => {
+                            trigger(
+                                context,
+                                `${dbUrl}/users/login`,
+                                'post',
+                                context.data,
+                                'SUCCESS',
+                                'FAILURE'
+                            )
                         }
-                    })
-                }
-            ],
-            on: {
+                    ]
+                },
                 SUCCESS: {
                     actions: [
                         assign({
@@ -65,43 +40,137 @@ const mainMachine = createMachine({
                     ],
                     target: 'dashboard'
                 },
-                FAILURE: [
-                    {
-                        guard: ({context}) => context.reqType === 'signup',
-                        target: 'signup',
-                        actions: [
-                            () => {console.log('SIGNUP ERROR')},
-                            assign({
-                                response: null
-                            }),
-                            'sendResponse'
-                        ]
-                    },
-                    {
-                        guard: ({context}) => context.reqType === 'login',
-                        target: 'login',
-                        actions: [
-                            () => {console.log("LOGIN ERROR")},
-                            assign({
-                                response: null
-                            }),
-                            'sendResponse'
-                        ]  
-                    }
-                ]
-            }              
+                FAILURE: {
+                    target: 'login',
+                    actions: [
+                        () => {console.log('LOGIN ERROR')},
+                        assign({
+                            response: null
+                        }),
+                        'sendResponse'
+                    ]
+                }
+            }
+        },
+        signup: {
+            on: {
+                GO_TO_LOGIN: {
+                    target: "login",
+                },
+                SIGNUP: {
+                    actions: [
+                        assign({
+                            data: ({event}) => event.value
+                        }),
+                        'spawnFetchMachine',
+                        async ({context}) => {
+                            trigger(
+                                context,
+                                `${dbUrl}/users/signup`,
+                                'post',
+                                context.data,
+                                'SUCCESS',
+                                'FAILURE'
+                            )
+                        }
+                    ]
+                },
+                SUCCESS: {
+                    actions: [
+                        assign({
+                            response: ({event}) => event.context.response
+                        }),
+                        'sendResponse'
+                    ],
+                    target: 'dashboard'
+                },
+                FAILURE: {
+                    target: 'signup',
+                    actions: [
+                        () => {console.log('SIGNUP ERROR')},
+                        assign({
+                            response: null
+                        }),
+                        'sendResponse'
+                    ]
+                }
+            }
         },
         dashboard: {
-            type: 'final'
+            on: {
+                LOGOUT: {
+                    target: 'login',
+                    actions: 'sendResponse'
+                },
+                FETCH_TODOS: {
+                    actions: [
+                        assign({
+                            data: ({event}) => event.value
+                        }),
+                        'spawnFetchMachine',
+                        async ({context}) => {
+                            trigger(
+                                context,
+                                `${dbUrl}/todos/${context.data.userId}`,
+                                'get',
+                                {},
+                                'SUCCESS',
+                                'FAILURE'
+                            )
+                        }
+                    ]
+                },
+                ADD_TODO: {
+                    actions: [
+                        assign({
+                            data: ({event}) => event.value.newTodo
+                        }),
+                        'spawnFetchMachine',
+                        async ({context}) => {
+                            trigger(
+                                context,
+                                `${dbUrl}/todos`,
+                                'post',
+                                context.data,
+                                'SUCCESS',
+                                'FAILURE'
+                            )
+                        }
+                    ]
+                },
+                SUCCESS: {
+                    actions: [
+                        assign({
+                            response: ({event}) => event.context.response
+                        }),
+                        'sendResponse'
+                    ],
+                },
+                FAILURE: {
+                    actions: [
+                        () => {console.log('TODO ERROR')},
+                        assign({
+                            response: null
+                        }),
+                        'sendResponse'
+                    ]
+                }
+            }
         }
     }
 }, {
     actions: {
-        spawnUserMachine: assign({
-            userMachineRef: ({spawn}) => spawn(userMachine),
+        spawnFetchMachine: assign({
+            fetchMachineRef: ({spawn}) => spawn(fetchMachine),
         })
     }
 });
 
+const trigger = (context, url, request, data, success, failure) => {
+    context.fetchMachineRef.send({
+        type: 'SEND_REQ',
+        value: {url, request, data, success, failure}
+    })
+}
 
 module.exports = mainMachine;
