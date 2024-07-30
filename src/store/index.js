@@ -94,7 +94,9 @@ const store = createStore({
     },
     async updateTodo({ commit }, todo) {
       try {
-        const response = await axios.put(`${apiUrl}/todos/${todo._id}`, todo)
+        const response = await axios.post(`http://localhost:3000`, { transition: 'UPDATE_TODO', data: {todo} })
+        // const response = await axios.put(`${apiUrl}/todos/${todo._id}`, todo)
+        console.log(response.data)
         commit('updateTodo', response.data)
       } catch (error) {
         console.log(error)

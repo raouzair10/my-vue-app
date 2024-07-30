@@ -138,6 +138,24 @@ const mainMachine = createMachine({
                         }
                     ]
                 },
+                UPDATE_TODO: {
+                    actions: [
+                        assign({
+                            data: ({event}) => event.value.todo
+                        }),
+                        'spawnFetchMachine',
+                        async ({context}) => {
+                            trigger(
+                                context,
+                                `${dbUrl}/todos/${context.data._id}`,
+                                'put',
+                                context.data,
+                                'SUCCESS',
+                                'FAILURE'
+                            )
+                        }
+                    ]
+                },
                 SUCCESS: {
                     actions: [
                         assign({

@@ -1,7 +1,7 @@
-const { createMachine, assign, sendParent, setup, fromPromise } = require("xstate");
+const { assign, sendParent, setup, fromPromise } = require("xstate");
 const axios = require("axios");
 
-const userMachine = setup({    
+const fetchMachine = setup({    
     actions: {
         receiveValues: assign({
             url: ({event}) => event.value.url,
@@ -78,4 +78,4 @@ const userMachine = setup({
 }
 );
 
-module.exports = userMachine;
+module.exports = fetchMachine;
