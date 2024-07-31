@@ -12,7 +12,7 @@ import TodoList from '../components/TodoList.vue'
 
 <style scoped>
 .dashboard {
-  height: 100vh;
+  height: 100%;
   display: flex;
   background-color: #435585;
 }

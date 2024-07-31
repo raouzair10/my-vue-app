@@ -48,7 +48,8 @@ const store = createStore({
     },
     async signup({ commit }, { username, password }) {
       try {
-        const response = await axios.post(`${apiUrl}/users/signup`, { username, password })
+        const response = await axios.post(`http://localhost:3000`, { transition: 'SIGNUP', data: {username, password} })
+        // const response = await axios.post(`${apiUrl}/users/signup`, { username, password })
         const user = response.data
         commit('setUser', user)
         return { success: true }
@@ -86,7 +87,9 @@ const store = createStore({
     },
     async deleteTodo({ commit }, todoId) {
       try {
-        await axios.delete(`${apiUrl}/todos/${todoId}`)
+        await axios.post(`http://localhost:3000`, { transition: 'DELETE_TODO', data: {todoId} })
+
+        // await axios.delete(`${apiUrl}/todos/${todoId}`)
         commit('deleteTodo', todoId)
       } catch (error) {
         console.log(error)

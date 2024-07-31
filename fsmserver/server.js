@@ -23,7 +23,7 @@ const machineInstance = mainMachine.provide({
 
 const service = createActor(machineInstance).start()
 service.subscribe((state) => {
-    console.log("ON STATE: ", state.value)
+    console.log("ON STATE:", state.value)
 })
 
 let currentResponse = null

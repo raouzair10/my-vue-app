@@ -15,9 +15,7 @@ const mainMachine = createMachine({
                 },
                 LOGIN: {
                     actions: [
-                        assign({
-                            data: ({event}) => event.value
-                        }),
+                        'getData',
                         'spawnFetchMachine',
                         async ({context}) => {
                             trigger(
@@ -36,7 +34,10 @@ const mainMachine = createMachine({
                         assign({
                             response: ({event}) => event.context.response
                         }),
-                        'sendResponse'
+                        'sendResponse',
+                        () => {
+                            console.log('ACTION: LOGGING IN')
+                        }
                     ],
                     target: 'dashboard'
                 },
@@ -59,9 +60,7 @@ const mainMachine = createMachine({
                 },
                 SIGNUP: {
                     actions: [
-                        assign({
-                            data: ({event}) => event.value
-                        }),
+                        'getData',
                         'spawnFetchMachine',
                         async ({context}) => {
                             trigger(
@@ -80,7 +79,10 @@ const mainMachine = createMachine({
                         assign({
                             response: ({event}) => event.context.response
                         }),
-                        'sendResponse'
+                        'sendResponse',
+                        () => {
+                            console.log('ACTION: SIGINING UP')
+                        }
                     ],
                     target: 'dashboard'
                 },
@@ -100,13 +102,16 @@ const mainMachine = createMachine({
             on: {
                 LOGOUT: {
                     target: 'login',
-                    actions: 'sendResponse'
+                    actions: [
+                        'sendResponse',
+                        () => {
+                            console.log('ACTION: LOGGING OUT')
+                        }
+                    ]
                 },
                 FETCH_TODOS: {
                     actions: [
-                        assign({
-                            data: ({event}) => event.value
-                        }),
+                        'getData',
                         'spawnFetchMachine',
                         async ({context}) => {
                             trigger(
@@ -117,42 +122,69 @@ const mainMachine = createMachine({
                                 'SUCCESS',
                                 'FAILURE'
                             )
+                        },
+                        () => {
+                            console.log('ACTION: FETCHING TODOS')
                         }
                     ]
                 },
                 ADD_TODO: {
                     actions: [
-                        assign({
-                            data: ({event}) => event.value.newTodo
-                        }),
+                        'getData',
                         'spawnFetchMachine',
                         async ({context}) => {
                             trigger(
                                 context,
                                 `${dbUrl}/todos`,
                                 'post',
-                                context.data,
+                                context.data.newTodo,
                                 'SUCCESS',
                                 'FAILURE'
                             )
+                        },
+                        () => {
+                            console.log('ACTION: ADDING TODO')
                         }
                     ]
                 },
                 UPDATE_TODO: {
                     actions: [
-                        assign({
-                            data: ({event}) => event.value.todo
-                        }),
+                        'getData',
+                        ({context}) => {
+                            console.log(context.data.todo._id)
+                        },
                         'spawnFetchMachine',
                         async ({context}) => {
                             trigger(
                                 context,
-                                `${dbUrl}/todos/${context.data._id}`,
+                                `${dbUrl}/todos/${context.data.todo._id}`,
                                 'put',
-                                context.data,
+                                context.data.todo,
                                 'SUCCESS',
                                 'FAILURE'
                             )
+                        },
+                        () => {
+                            console.log('ACTION: UPDATING TODO')
+                        }
+                    ]
+                },
+                DELETE_TODO: {
+                    actions: [
+                        'getData',
+                        'spawnFetchMachine',
+                        async ({context}) => {
+                            trigger(
+                                context,
+                                `${dbUrl}/todos/${context.data.todoId}`,
+                                'delete',
+                                {},
+                                'SUCCESS',
+                                'FAILURE'
+                            )
+                        },
+                        () => {
+                            console.log('ACTION: DLELTING TODO')
                         }
                     ]
                 },
@@ -161,7 +193,10 @@ const mainMachine = createMachine({
                         assign({
                             response: ({event}) => event.context.response
                         }),
-                        'sendResponse'
+                        'sendResponse',
+                        () => {
+                            console.log('TODO SUCCESS')
+                        }
                     ],
                 },
                 FAILURE: {
@@ -178,6 +213,9 @@ const mainMachine = createMachine({
     }
 }, {
     actions: {
+        getData: assign({
+            data: ({event}) => event.value
+        }),
         spawnFetchMachine: assign({
             fetchMachineRef: ({spawn}) => spawn(fetchMachine),
         })
