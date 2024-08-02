@@ -27,9 +27,11 @@ const newTaskTitle = ref('')
 const newTaskPriority = ref('')
 
 const handleLogout = async () => {
-  await store.dispatch('logout')
-  ElMessage.success('Logged out successfully')
-  router.push('/login')
+  const result = await store.dispatch('logout')
+  if (result.success) {
+    ElMessage.success('Logged out successfully')
+    router.push('/login')
+  }
 }
 
 const addTask = async () => {
@@ -41,12 +43,14 @@ const addTask = async () => {
         completed: false,
         userId: user.value._id,
       }
-      await store.dispatch('addTodo', newTask)
-      ElMessage.success('Task added successfully')
-      newTaskTitle.value = ''
-      newTaskPriority.value = ''
+      const result = await store.dispatch('addTodo', newTask)
+      if (result.success) {
+        ElMessage.success('Task added successfully')
+        newTaskTitle.value = ''
+        newTaskPriority.value = ''
+      }
     } else {
-      throw new Error('Please fill in all fields')
+      ElMessage.error('Please fill in all fields')
     }
   } catch (error) {
     ElMessage.error(error.message)

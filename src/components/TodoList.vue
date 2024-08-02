@@ -89,15 +89,18 @@ const formatDate = (dateStr) => {
 }
 
 const deleteTodo = async (id) => {
-  await store.dispatch('deleteTodo', id)
-  ElMessage.success('Task deleted successfully')
+  const result = await store.dispatch('deleteTodo', id)
+  if (result.success)
+    ElMessage.success('Task deleted successfully')
 }
 
 const updateTask = async (todo) => {
   todo.updatedAt = new Date()
-  await store.dispatch('updateTodo', todo)
-  ElMessage.success('Task updated successfully')
-  todo.isEditing = false
+  const result = await store.dispatch('updateTodo', todo)
+  if (result.success) {
+    ElMessage.success('Task updated successfully')
+    todo.isEditing = false
+  }
 }
 
 </script>

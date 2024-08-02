@@ -11,7 +11,12 @@ const mainMachine = createMachine({
         login: {
             on: {
                 GO_TO_SIGNUP: {
-                    actions: 'sendResponse',
+                    actions: [
+                        'sendResponse',
+                        () => {
+                            console.log('ACTION: GOING TO SIGNUP')
+                        }
+                    ],
                     target: "signup"
                 },
                 LOGIN: {
@@ -57,7 +62,12 @@ const mainMachine = createMachine({
         signup: {
             on: {
                 GO_TO_LOGIN: {
-                    actions: 'sendResponse',
+                    actions: [
+                        'sendResponse',
+                        () => {
+                            console.log('ACTION: GOING TO LOGIN')
+                        }
+                    ],
                     target: "login"
                 },
                 SIGNUP: {

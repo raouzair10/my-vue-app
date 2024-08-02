@@ -68,14 +68,20 @@ const handleKeyPress = (event) => {
   isCapslockOn.value = event.getModifierState('CapsLock')
 }
 
+const goToLogin = async () => {
+  await store.dispatch('goToLogin')
+}
+
 onMounted(() => {
   window.addEventListener('keyup', handleKeyPress)
   window.addEventListener('keydown', handleKeyPress)
+  window.addEventListener('beforeunload', goToLogin)
 })
 
 onUnmounted(() => {
   window.removeEventListener('keyup', handleKeyPress)
   window.removeEventListener('keydown', handleKeyPress)
+  window.removeEventListener('beforeunload', goToLogin)
 })
 
 </script>

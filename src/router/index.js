@@ -3,7 +3,6 @@ import DashboardView from '../views/DashboardView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignupView from '../views/SignupView.vue'
 import store from '../store'
-import axios from 'axios'
 
 const routes = [
   {
@@ -32,7 +31,7 @@ router.beforeEach(async (to, from) => {
 
   try {
     if (from.name === 'login' && to.name === 'signup') {
-      await axios.post(`http://localhost:3000`, { transition: 'GO_TO_SIGNUP', data: {} })
+      await store.dispatch('goToSignup')
     }
   } catch (error) {
     console.log(error)
@@ -40,7 +39,7 @@ router.beforeEach(async (to, from) => {
   }
   try {
     if (from.name === 'signup' && to.name === 'login') {
-      await axios.post(`http://localhost:3000`, { transition: 'GO_TO_LOGIN', data: {} })
+      await store.dispatch('goToLogin')
     }
   } catch (error) {
     console.log(error)

@@ -57,10 +57,29 @@ const store = createStore({
     },
     async logout({ commit }) {
       try {
-        await axios.post(apiUrl, { transition: 'LOGOUT' })
+        await axios.post(apiUrl, { transition: 'LOGOUT', data: {} })
         commit('clearUser')
+        return { success: true }
+      } catch (error) {
+        return { success: false }
+      }
+    },
+    async goToSignup() {
+      try {
+        await axios.post(apiUrl, { transition: 'GO_TO_SIGNUP', data: {} })
+        return { success: true }
       } catch (error) {
         console.log(error)
+        return { success: false }
+      }
+    },
+    async goToLogin() {
+      try {
+        await axios.post(apiUrl, { transition: 'GO_TO_LOGIN', data: {} })
+        return { success: true }
+      } catch (error) {
+        console.log(error)
+        return { success: false }
       }
     },
     async fetchTodos({ commit }, userId) {
@@ -68,8 +87,10 @@ const store = createStore({
         const response = await axios.post(apiUrl, { transition: 'FETCH_TODOS', data: {userId} })
         const todos = response.data
         commit('setTodos', todos)
+        return { success: true }
       } catch (error) {
         console.log(error)
+        return { success: false }
       }
     },
     async addTodo({ commit }, newTodo) {
@@ -77,16 +98,20 @@ const store = createStore({
         const response = await axios.post(apiUrl, { transition: 'ADD_TODO', data: {newTodo} })
         console.log(response.data)
         commit('addTodo', response.data)
+        return { success: true }
       } catch (error) {
         console.log(error)
+        return { success: false }
       }
     },
     async deleteTodo({ commit }, todoId) {
       try {
         await axios.post(apiUrl, { transition: 'DELETE_TODO', data: {todoId} })
         commit('deleteTodo', todoId)
+        return { success: true }
       } catch (error) {
         console.log(error)
+        return { success: false }
       }
     },
     async updateTodo({ commit }, todo) {
@@ -94,8 +119,10 @@ const store = createStore({
         const response = await axios.post(apiUrl, { transition: 'UPDATE_TODO', data: {todo} })
         console.log(response.data)
         commit('updateTodo', response.data)
+        return { success: true }
       } catch (error) {
         console.log(error)
+        return { success: false }
       }
     }
   },
