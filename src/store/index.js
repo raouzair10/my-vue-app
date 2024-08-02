@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 
-const apiUrl = 'http://localhost:5000/api'
+const apiUrl = 'http://localhost:3000'
 
 const store = createStore({
   state: {
@@ -37,8 +37,7 @@ const store = createStore({
   actions: {
     async login({ commit }, { username, password }) {
       try {
-        const response = await axios.post(`http://localhost:3000`, { transition: 'LOGIN', data: {username, password} })
-        // const response = await axios.post(`${apiUrl}/users/login`, { username, password })
+        const response = await axios.post(apiUrl, { transition: 'LOGIN', data: {username, password} })
         const user = response.data
         commit('setUser', user)
         return { success: true }
@@ -48,8 +47,7 @@ const store = createStore({
     },
     async signup({ commit }, { username, password }) {
       try {
-        const response = await axios.post(`http://localhost:3000`, { transition: 'SIGNUP', data: {username, password} })
-        // const response = await axios.post(`${apiUrl}/users/signup`, { username, password })
+        const response = await axios.post(apiUrl, { transition: 'SIGNUP', data: {username, password} })
         const user = response.data
         commit('setUser', user)
         return { success: true }
@@ -59,7 +57,7 @@ const store = createStore({
     },
     async logout({ commit }) {
       try {
-        await axios.post(`http://localhost:3000`, { transition: 'LOGOUT' })
+        await axios.post(apiUrl, { transition: 'LOGOUT' })
         commit('clearUser')
       } catch (error) {
         console.log(error)
@@ -67,8 +65,7 @@ const store = createStore({
     },
     async fetchTodos({ commit }, userId) {
       try {
-        const response = await axios.post(`http://localhost:3000`, { transition: 'FETCH_TODOS', data: {userId} })
-        // const response = await axios.get(`${apiUrl}/todos/${userId}`)
+        const response = await axios.post(apiUrl, { transition: 'FETCH_TODOS', data: {userId} })
         const todos = response.data
         commit('setTodos', todos)
       } catch (error) {
@@ -77,8 +74,7 @@ const store = createStore({
     },
     async addTodo({ commit }, newTodo) {
       try {
-        const response = await axios.post(`http://localhost:3000`, { transition: 'ADD_TODO', data: {newTodo} })
-        // const response = await axios.post(`${apiUrl}/todos`, newTodo)
+        const response = await axios.post(apiUrl, { transition: 'ADD_TODO', data: {newTodo} })
         console.log(response.data)
         commit('addTodo', response.data)
       } catch (error) {
@@ -87,9 +83,7 @@ const store = createStore({
     },
     async deleteTodo({ commit }, todoId) {
       try {
-        await axios.post(`http://localhost:3000`, { transition: 'DELETE_TODO', data: {todoId} })
-
-        // await axios.delete(`${apiUrl}/todos/${todoId}`)
+        await axios.post(apiUrl, { transition: 'DELETE_TODO', data: {todoId} })
         commit('deleteTodo', todoId)
       } catch (error) {
         console.log(error)
@@ -97,8 +91,7 @@ const store = createStore({
     },
     async updateTodo({ commit }, todo) {
       try {
-        const response = await axios.post(`http://localhost:3000`, { transition: 'UPDATE_TODO', data: {todo} })
-        // const response = await axios.put(`${apiUrl}/todos/${todo._id}`, todo)
+        const response = await axios.post(apiUrl, { transition: 'UPDATE_TODO', data: {todo} })
         console.log(response.data)
         commit('updateTodo', response.data)
       } catch (error) {

@@ -11,7 +11,8 @@ const mainMachine = createMachine({
         login: {
             on: {
                 GO_TO_SIGNUP: {
-                    target: "signup",
+                    actions: 'sendResponse',
+                    target: "signup"
                 },
                 LOGIN: {
                     actions: [
@@ -56,7 +57,8 @@ const mainMachine = createMachine({
         signup: {
             on: {
                 GO_TO_LOGIN: {
-                    target: "login",
+                    actions: 'sendResponse',
+                    target: "login"
                 },
                 SIGNUP: {
                     actions: [
@@ -184,7 +186,7 @@ const mainMachine = createMachine({
                             )
                         },
                         () => {
-                            console.log('ACTION: DLELTING TODO')
+                            console.log('ACTION: DELETING TODO')
                         }
                     ]
                 },
