@@ -1,7 +1,7 @@
 # My Vue App
 
 ## Description
-This project is a todo list application built with Vue.js, using the Composition API and Vuex for state management. It includes user authentication, allowing users to sign up, log in, and manage their tasks. The backend is built with Node.js and MongoDB.
+This project is a todo list application built with Vue.js, using the Composition API and Vuex for state management. It includes user authentication, allowing users to sign up, log in, and manage their tasks. The backend is built with Node.js and MongoDB, and Xstate for state management using FSM.
 
 ## Features
 - User authentication (signup and login)
@@ -12,6 +12,7 @@ This project is a todo list application built with Vue.js, using the Composition
 ## Technologies Used
 - Vue.js
 - Vuex
+- Xstate
 - Element Plus
 - Node.js
 - Express
@@ -34,11 +35,14 @@ cd my-vue-app
 npm install
 cd backend
 npm install
+cd ..
+cd fsmserver
+npm install
 ```
 
 ### Environment Variables
 Create a .env file in the backend directory and add the following environment variables:
-MONGO_URI=<your-mongodb-uri>
+MONGO_URI=&lt;your-mongodb-uri&gt;
 
 
 ### Running the Application
@@ -49,7 +53,12 @@ npm run dev
 #### Backend
 ```bash
 cd backend
-npm start
+nodemon server
+```
+#### FSM Server
+```bash
+cd fsmserver
+nodemon server
 ```
 
-Replace <your-mongodb-uri> with your actual MongoDB URI. After setting up and running both frontend and backend, you can access the application at http://localhost:5173/ by default.
+Replace &lt;your-mongodb-uri&gt; with your actual MongoDB URI. After setting up and running both frontend and backend, you can access the application at http://localhost:5173/ by default.
