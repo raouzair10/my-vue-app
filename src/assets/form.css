@@ -10,11 +10,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: -webkit-linear-gradient(left, #363062, #546087, #6f7ea5, #818FB4);
+  background: -webkit-linear-gradient(left, #082032, #223B46, #415D65, #668A8B);
 }
 .wrapper {
   max-width: 390px;
-  background: #605991;
+  background: #415D65;
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0px 15px 20px rgba(0,0,0,0.3);
@@ -40,7 +40,7 @@
   border-bottom-width: 2px;
   font-size: 17px;
   transition: all 0.3s ease;
-  background-color: #363062;
+  background-color: #223B46;
   color: #fff;
 }
 .field input:focus {
@@ -68,7 +68,7 @@
   background: none;
   border: none;
   color: #fff;
-  background: -webkit-linear-gradient(right, #363062, #546087, #6f7ea5, #818FB4);
+  background: -webkit-linear-gradient(right, #082032, #223B46, #415D65, #668A8B);
   border-radius: 15px;
   font-size: 20px;
   font-weight: 500;

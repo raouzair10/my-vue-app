@@ -13,7 +13,6 @@ const fetchMachine = setup({
     },
     actors: {
         sendRequest: fromPromise(async (context) => {
-            // console.log("User Machine Context = ", context.input)
             try {
                 const res = await axios({
                     method: context.input.request,
@@ -22,7 +21,6 @@ const fetchMachine = setup({
                 })
                 return res.data
             } catch (error) {
-                // console.error("Error in sendRequest:", error)
                 throw error;
             }
         })

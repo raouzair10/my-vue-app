@@ -122,7 +122,7 @@ const updateTask = async (todo) => {
   height: 100%;
   flex-grow: 1;
   padding: 20px;
-  background-color: #435585;
+  background-color: #223B46;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   min-height: 100vh;
@@ -131,12 +131,12 @@ const updateTask = async (todo) => {
 
 .el-table {
   font-family: 'Roboto', sans-serif;
-  background-color: #435585;
+  background-color: #223B46;
   color: #fff;
 }
 
 :deep(.el-table .el-table__row) {
-  background-color: #435585;
+  background-color: #223B46;
   color: #fff;
 }
 

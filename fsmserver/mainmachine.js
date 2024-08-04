@@ -162,9 +162,6 @@ const mainMachine = createMachine({
                 UPDATE_TODO: {
                     actions: [
                         'getData',
-                        ({context}) => {
-                            console.log(context.data.todo._id)
-                        },
                         'spawnFetchMachine',
                         async ({context}) => {
                             trigger(

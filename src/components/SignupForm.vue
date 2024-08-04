@@ -75,13 +75,11 @@ const goToLogin = async () => {
 onMounted(() => {
   window.addEventListener('keyup', handleKeyPress)
   window.addEventListener('keydown', handleKeyPress)
-  window.addEventListener('beforeunload', goToLogin)
 })
 
 onUnmounted(() => {
   window.removeEventListener('keyup', handleKeyPress)
   window.removeEventListener('keydown', handleKeyPress)
-  window.removeEventListener('beforeunload', goToLogin)
 })
 
 </script>

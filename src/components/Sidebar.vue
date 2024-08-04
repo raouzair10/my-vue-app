@@ -64,7 +64,7 @@ const addTask = async () => {
   height: 100vh;
   width: 250px;
   padding: 20px;
-  background-color: #363062;
+  background-color: #142926;
   display: flex;
   flex-direction: column;
   gap: 15px;
